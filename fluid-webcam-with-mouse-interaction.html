@@ -159,6 +159,10 @@
       videoTexture.minFilter = THREE.LinearFilter;
       videoTexture.magFilter = THREE.LinearFilter;
 
+      document.body.onmousedown = () => {
+        video.play();
+      };
+
       const prevMouse = new THREE.Vector2(0.0, 0.0);
       const currentMouse = new THREE.Vector2(0.0, 0.0);
       let isMouseMoved = false;
