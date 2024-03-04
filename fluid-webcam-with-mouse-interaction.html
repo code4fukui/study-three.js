@@ -169,6 +169,7 @@
 
       if ("ontouchstart" in window) {
         window.addEventListener('touchmove', e => {
+          e.preventDefault();
           if (e.target != renderer.domElement) return;
           if (!isMouseMoved) {
             prevMouse.copy(currentMouse);
@@ -177,7 +178,7 @@
           const touch = e.targetTouches[0];
           currentMouse.x = touch.pageX / window.innerWidth;
           currentMouse.y = 1.0 - (touch.pageY / window.innerHeight);
-        }, false);
+        }, { passive: false });
       } else {
         window.addEventListener('mousemove', onMouseMove, false);
 
