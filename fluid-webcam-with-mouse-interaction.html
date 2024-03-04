@@ -161,15 +161,29 @@
       const prevMouse = new THREE.Vector2(0.0, 0.0);
       const currentMouse = new THREE.Vector2(0.0, 0.0);
       let isMouseMoved = false;
-      window.addEventListener('mousemove', onMouseMove, false);
 
-      function onMouseMove(event) {
-        if (!isMouseMoved) {
-          prevMouse.copy(currentMouse);
+      if ("ontouchstart" in window) {
+        window.addEventListener('touchmove', e => {
+          if (e.target != renderer.domElement) return;
+          if (!isMouseMoved) {
+            prevMouse.copy(currentMouse);
+          }
+          isMouseMoved = true;
+          const touch = e.targetTouches[0];
+          currentMouse.x = touch.pageX / window.innerWidth;
+          currentMouse.y = 1.0 - (touch.pageY / window.innerHeight);
+        }, false);
+      } else {
+        window.addEventListener('mousemove', onMouseMove, false);
+
+        function onMouseMove(event) {
+          if (!isMouseMoved) {
+            prevMouse.copy(currentMouse);
+          }
+          isMouseMoved = true;
+          currentMouse.x = event.clientX / window.innerWidth;
+          currentMouse.y = 1.0 - (event.clientY / window.innerHeight);
         }
-        isMouseMoved = true;
-        currentMouse.x = event.clientX / window.innerWidth;
-        currentMouse.y = 1.0 - (event.clientY / window.innerHeight);
       }
 
       const gpuCompute = new GPUComputationRenderer(window.innerWidth, window.innerHeight, renderer);
