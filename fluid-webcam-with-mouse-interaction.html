@@ -155,13 +155,13 @@
       document.body.appendChild(renderer.domElement);
 
       const video = document.createElement('video');
+      video.muted = true;
+      video.setAttribute('autoplay', 'autoplay');
+      video.setAttribute('loop', 'loop');
+      video.setAttribute('playsinline', 'playsinline');
       const videoTexture = new THREE.VideoTexture(video);
       videoTexture.minFilter = THREE.LinearFilter;
       videoTexture.magFilter = THREE.LinearFilter;
-
-      document.body.onmousedown = () => {
-        video.play();
-      };
 
       const prevMouse = new THREE.Vector2(0.0, 0.0);
       const currentMouse = new THREE.Vector2(0.0, 0.0);
